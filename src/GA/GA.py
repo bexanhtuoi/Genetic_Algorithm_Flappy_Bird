@@ -12,14 +12,14 @@ class GA:
         return weights[idx[0]], weights[idx[1]]
     
     def crossover(self, parent1, parent2):
-        alpha = 0.5
+        alpha = 0.45
         child = (alpha * parent1) + ((1 - alpha) * parent2)
         return child
 
     def mutate(self, weights):
         mutation_prob = self.mutation_rate
         if np.random.rand() < self.mutation_rate:
-            weights += (np.random.uniform(-0.1, 0.1, size=weights.shape) * np.random.randint(0, 2, size=weights.shape))
+            weights += (np.random.uniform(-0.01, 0.01, size=weights.shape))
         return weights
 
     def fit(self, fitness, weights):

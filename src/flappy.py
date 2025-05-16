@@ -97,14 +97,14 @@ class Flappy:
             self.distance = np.zeros(self.Population)
             self.upper = np.zeros(self.Population)
             self.under = np.zeros(self.Population)
-            self.distance_to_gap = np.zeros(self.Population)
+            self.gap = np.zeros(self.Population)
             
             self.location += player.y
             self.speed += player.vel_y
             self.distance += self.pipes.upper[0].x
-            self.upper += self.pipes.upper[0].y
+            self.upper += self.pipes.lower[0].y + self.pipes.pipe_gap
             self.under += self.pipes.lower[0].y
-            self.distance_to_gap += player.y - ((self.pipes.lower[0].y + self.pipes.upper[0].y) / 2)
+            self.gap += (self.pipes.lower[0].y + (self.pipes.pipe_gap/ 2))
 
             self.X = np.array([
                 self.location,
@@ -112,9 +112,10 @@ class Flappy:
                 self.distance,
                 self.upper,
                 self.under,
-                self.distance_to_gap
+                self.gap
             ]).T
 
+            print(self.X)
             self.y = self.ANN.forward(self.X)
 
             for i, pipe in enumerate(self.pipes.upper):
